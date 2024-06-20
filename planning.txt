@@ -1,0 +1,32 @@
+Grid:
+grid has various states and behaviours
+it has rows and columns
+it has CELL objects that we can find by indexing [row][column]
+it is either 'in play' or over
+there are just as many flags as there are CELLS with bombs
+
+behaviours:
+* initialises tiles/cells
+* has to ensure first move is never a bomb because this ends game
+* handles number of bombs and their location...
+* handles flag limit and usage
+* handles uncovering of cells
+* can uncover multiple cells if a cell concealing a bomb has been uncovered
+
+
+
+Cell/Tile:
+it is either covered or uncovered
+it has neighbours (all cells within a radius [the cell size], incl those at corners)
+it is either a bomb/mine or a safezone
+a safezone has personal safety that tells us about the safety of its neighbourhood
+
+behaviours:
+* you may only play covered tiles
+covered tiles:
+    * you can either place a flag on an covered tile that you strongly suspect to be concealing a mine
+    * or you may dig to uncover it if you're certain it is a safezone
+    * if you uncover a bomb, SEND MESSAGE to grid to uncover alles tiles and close grid
+    * if you uncover a completely safezone, automatically uncover neighbours until until
+uncovered tiles:
+    * can show neighbour info
