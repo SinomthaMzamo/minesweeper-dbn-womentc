@@ -1,3 +1,4 @@
+import game_build.tile
 from game_build.grid import Grid
 from game_build.tile import MineTile, SafeTile
 from random import choice, sample, shuffle
@@ -171,6 +172,18 @@ class Board:
         possible_mine_territory_locales = [(i, j) for i, row in enumerate(matrix) for j, _ in enumerate(row) if (i, j) not in first_neighbourhood_locales]
         return possible_mine_territory_locales
 
+    def get_rows(self):
+        return self.grid.rows
+
+    def get_columns(self):
+        return self.grid.columns
+
+    def get_tile_from_locale(self, locale: tuple):
+        i, j = locale
+        return self.grid.matrix[i][j][0]
+
+    def get_tile_size(self, width: int):
+        return width // self.get_columns()
 
 class Game:
     """ Runs the logic and flow of game:

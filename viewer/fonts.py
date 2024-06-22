@@ -17,3 +17,8 @@ MONACO = "Monaco"
 BRUSH_SCRIPT = "Brush Script"
 LUCIDA_HANDWRITING = "Lucida Handwriting"
 COMIC_SANS_MS = "Comic Sans MS"
+
+GROTESQUE = "fonts/grotesque.ttf"
+ROBOT = "fonts/roboto.ttf"
+GEOLOGICA = "fonts/geologica.ttf"
+

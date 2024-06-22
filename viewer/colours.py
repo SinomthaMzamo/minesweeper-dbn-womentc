@@ -59,4 +59,6 @@ DARK_ORANGE = (255, 140, 0)
 # Yellow Shades
 PALE_YELLOW = (255, 255,  155)
 
+BLACK = (0,0,0)
+
 
