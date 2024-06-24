@@ -1,6 +1,6 @@
 import game_build.tile
 from game_build.grid import Grid
-from game_build.tile import MineTile, SafeTile
+from game_build.tile import MineTile, SafeTile, Tile
 from random import choice, sample, shuffle
 
 class Board:
@@ -20,6 +20,8 @@ class Board:
         # set tile size here
 
         difficulty_levels = {
+            "pops": {"size": 10, "mine_count": 60},
+            "test": {"size": 4, "mine_count":3},
             "easy": {"size": 9, "mine_count": 10},
             "medium": {"size": 16, "mine_count": 40},
             "hard": {"size": 24, "mine_count": 99}
@@ -178,7 +180,7 @@ class Board:
     def get_columns(self):
         return self.grid.columns
 
-    def get_tile_from_locale(self, locale: tuple):
+    def get_tile_from_locale(self, locale: tuple) -> Tile:
         i, j = locale
         return self.grid.matrix[i][j][0]
 
@@ -212,39 +214,26 @@ class Game:
         # self.tile_size = None           # depends on grid dimensions and is irrelevant until GUI stage
         self.flags_placed = 0
 
-    def run_game(self):
+    def run_game(self, this_move, flag=False):
         """
         Run the main game loop.
         """
         # start the game
         self.in_play = True
         
-        # main game loop, exits loop if a mine tile is revealed or player has cancelled game-play
-        while self.in_play and all(not tile[0].is_revealed for tile in self.board.all_mines) :
-
-            # get next move
-            this_move = choice([tile[0].locale for tile in self.board.grid.contents if not tile[0].is_revealed])
-
-            # get prompt from user, hit enter key to confirm selected choice
-            confirm = input(f'confirm selection: {this_move}\n> ')
-
-            if confirm: 
-                if confirm == 'off':        # close game loop
-                    self.in_play = False
-                elif confirm == "nah":      # pass a choice without flagging
-                    pass
-                elif confirm == "flag":     # flag chosen cell and make another choice
-                    self.handle_flag_limit_and_usage(this_move)
-                continue                
+        if self.in_play:
+            if flag:
+                self.handle_flag_limit_and_usage(this_move)
+                print("toggling flag...")
+                return
             
             self.board.game_reveal(this_move)
 
             # exits game loop if reveal resulted in a win
             self.check_win()
-
-        # game loop exited by revealing a bomb
-        if self.in_play:
-            self.game_over()
+        
+            if not all(not tile[0].is_revealed for tile in self.board.all_mines) :
+                self.game_over()
 
     def check_win(self):
         """
@@ -262,10 +251,11 @@ class Game:
         Detonate all mine tiles and end the game.
         """
         all_mines = self.board.all_mines
-
+        print("detonating", all_mines, "mines.")
         # uncover all mines
         for tile in all_mines:
             tile[0].reveal()
+
 
         # TO_DO: take note of how many were correctly flagged and show this
 
@@ -293,8 +283,8 @@ class Game:
         - tile_locale (tuple): Coordinates (row, column) of the selected tile.
         """
         i,j = tile_locale
-        tile = self.board.grid.matrix[i][j][0]
-
+        tile = self.get_game_board().get_tile_from_locale(tile_locale)
+        print(self.board.mine_count - self.flags_placed)
         if self.flags_placed <= self.board.mine_count:
             # don't place a flag if flag limit reached
             if not tile.is_flagged and self.flags_placed >= self.board.mine_count:
@@ -304,5 +294,16 @@ class Game:
             # reduce or increment available flags depending on whether a flag was placed or removed
             if tile.is_flagged:
                 self.flags_placed += 1
+                print("flag placed at: ", tile_locale)
             else:
                 self.flags_placed -= 1
+                print("flag removed at: ", tile_locale)
+
+    def get_game_board(self) -> Board:
+        return self.board
+
+    def get_number_of_flags_placed(self):
+        return self.flags_placed
+
+    def get_mine_count(self):
+        return self.board.mine_count

@@ -19,6 +19,6 @@ LUCIDA_HANDWRITING = "Lucida Handwriting"
 COMIC_SANS_MS = "Comic Sans MS"
 
 GROTESQUE = "fonts/grotesque.ttf"
-ROBOT = "fonts/roboto.ttf"
+ROBOTO = "fonts/roboto.ttf"
 GEOLOGICA = "fonts/geologica.ttf"
 

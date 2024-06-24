@@ -1,4 +1,8 @@
 
+# TODO : The get_matrix function currently uses a list comprehension to convert the
+#  contents list to a matrix. This might become inefficient for larger grids. 
+# Explore alternative libraries like numpy for efficient multi-dimensional array handling.
+
 class Grid:
     def __init__(self, rows, columns):
         """

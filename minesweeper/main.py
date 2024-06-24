@@ -20,7 +20,7 @@ def play_minesweeper():
     minesweeper.board.set_up_game_board(first_move_locale)
 
     # start game loop
-    minesweeper.run_game()
+    minesweeper.run_game(first_move_locale)
 
 
 if __name__ == "__main__":
