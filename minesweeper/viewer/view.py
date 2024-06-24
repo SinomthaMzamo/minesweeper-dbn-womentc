@@ -5,6 +5,7 @@ from game_build.tile import SafeTile
 import sys
 import colours
 import fonts
+import time
 
 # Initialize Pygame
 pygame.init()
@@ -138,7 +139,7 @@ def get_grid_location_of_tile(mouse_click_location: tuple, board: Board):
         return tile_location_y, tile_location_x
 
 
-def draw_window(game: Game):
+def draw_window(game: Game, elapsed_time: int):
     """
     Draws the main window with the Minesweeper board centered within the designated grid area.
 
@@ -147,7 +148,7 @@ def draw_window(game: Game):
     """
     screen.fill(colours.SNOW)
     update_flags(game)
-    track_time(game)
+    track_time(game, elapsed_time)
     draw_board(game.get_game_board())
     pygame.display.update()
 
@@ -169,12 +170,13 @@ def main():
     mode = choice(game_modes)
 
     # Create Board instance
-    board1 = Board("EASY")
+    board1 = Board("easy")
 
     # Create Game instance
     minesweeper = Game(board1)
-
+    start_time = None
     running = True
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -188,12 +190,13 @@ def main():
                     selected_tile = get_grid_location_of_tile(mouse_position, minesweeper.get_game_board())
                     tile = minesweeper.get_game_board().get_tile_from_locale(selected_tile)
                     if isinstance(tile, tuple):
+                        start_time = time.time()                # start the timer on first button click
                         minesweeper.board.set_up_game_board(selected_tile)
                         continue
                     flag = event.button == 3
                     minesweeper.run_game(selected_tile, flag)
-
-        draw_window(minesweeper)
+        elapsed_time = 0 if start_time== None else int(time.time() - start_time)            # set it to none and then use ternary
+        draw_window(minesweeper, elapsed_time)
 
     close()
 
@@ -208,10 +211,15 @@ def update_flags(game: Game):
     screen.blit(flag, (GRID_TOP_LEFT_X-50*2+15, 50))
     screen.blit(flags_placed_img, (GRID_TOP_LEFT_X-50*2, GRID_TOP_LEFT_X-65))
 
-def track_time(game: Game):
+def track_time(game: Game, elapsed_time: int):
     clock = pygame.image.load("clock.png").convert_alpha()
     clock = pygame.transform.scale(clock, (50,50))
     screen.blit(clock, (GRID_TOP_LEFT_X-50*2+5, 150))
+
+    timer_font = pygame.font.Font(fonts.GEOLOGICA, 20)
+    timer_img = timer_font.render(f"{elapsed_time // 60:02}:{elapsed_time % 60:02}", True, colours.BLACK)
+    screen.blit(timer_img, (GRID_TOP_LEFT_X - 50 * 3 + 60, 200))
+
 
 def click_is_on_grid(click_position: tuple):
     click_x, click_y = click_position
