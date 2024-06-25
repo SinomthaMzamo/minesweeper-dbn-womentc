@@ -75,7 +75,7 @@ class SafeTile(Tile):
         if getattr(self, "totally_safe", None):
             print(f'doing bubble for neighbours of {self.locale}...')
             for tile in self.neighbours:
-                tile[0].reveal()
+                tile.reveal()
 
         # show number of unsafe neighbours if a somewhat safe tile was revealed 
         else:
@@ -89,7 +89,7 @@ class SafeTile(Tile):
         Returns:
         - int: The number of mines in the tile's neighborhood.
         """
-        unsafe_neighbours = [n for n in self.neighbours if not hasattr(n[0], "totally_safe") and not isinstance(n[0], tuple)]
+        unsafe_neighbours = [n for n in self.neighbours if not hasattr(n, "totally_safe") and not isinstance(n, tuple)]
         face_num = len(unsafe_neighbours)
         return face_num
     

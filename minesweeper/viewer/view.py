@@ -68,8 +68,8 @@ def draw_board(board: Board):
     revealed_tile_blank_img = pygame.Surface((size, size))
     revealed_tile_blank_img.fill(colours.CARAMEL)
 
-    bomb = pygame.image.load("simple_bomb.png").convert_alpha()
-    bomb = pygame.transform.scale(bomb, (size - 10, size - 10))
+    bomb = pygame.image.load("spikes.png").convert_alpha()
+    bomb = pygame.transform.scale(bomb, (size-5, size-5))
     revealed_mine_tile_img = pygame.Surface((size, size))
 
 
@@ -109,7 +109,7 @@ def draw_board(board: Board):
                         bomb_x = size * x // 2 - (size * x - 10) // 2
                         bomb_y = size * y // 2 - (size * y - 5) // 2
                         # update revealed mine tile with image
-                        revealed_mine_tile_img.fill(colours.SALMON)
+                        revealed_mine_tile_img.fill(colours.TOMATO)
                         revealed_mine_tile_img.blit(bomb, (bomb_x, bomb_y))
                         screen.blit(revealed_mine_tile_img, (x, y))
     pygame.display.flip()
@@ -170,7 +170,7 @@ def main():
     mode = choice(game_modes)
 
     # Create Board instance
-    board1 = Board("easy")
+    board1 = Board("hard")
 
     # Create Game instance
     minesweeper = Game(board1)
