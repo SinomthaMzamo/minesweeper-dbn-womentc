@@ -20,6 +20,7 @@ class Board:
         # set tile size here
 
         difficulty_levels = {
+            "sandy-baby": {"size": 50, "mine_count": 230},
             "pops": {"size": 10, "mine_count": 60},
             "test": {"size": 4, "mine_count":3},
             "easy": {"size": 9, "mine_count": 10},
@@ -298,3 +299,6 @@ class Game:
 
     def get_mine_count(self):
         return self.board.mine_count
+
+    def is_in_play(self):
+        return  self.in_play

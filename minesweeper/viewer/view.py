@@ -165,17 +165,20 @@ def main():
     """
     Main function to initialize the game and handle game loop.
     """
+    # Create button objects (consider using a Button class)
     # Available game modes
     game_modes = ["easy", "medium", "hard"]
     mode = choice(game_modes)
 
     # Create Board instance
-    board1 = Board("hard")
+    board1 = Board("medium")
 
     # Create Game instance
     minesweeper = Game(board1)
     start_time = None
     running = True
+
+    sys.setrecursionlimit(10**6)
 
     while running:
         for event in pygame.event.get():
@@ -186,7 +189,7 @@ def main():
                 print(mouse_position)
                 is_play = click_is_on_grid(mouse_position)
                 print(is_play)
-                if is_play :
+                if is_play:
                     selected_tile = get_grid_location_of_tile(mouse_position, minesweeper.get_game_board())
                     tile = minesweeper.get_game_board().get_tile_from_locale(selected_tile)
                     if isinstance(tile, tuple):
@@ -195,7 +198,9 @@ def main():
                         continue
                     flag = event.button == 3
                     minesweeper.run_game(selected_tile, flag)
+
         elapsed_time = 0 if start_time== None else int(time.time() - start_time)            # set it to none and then use ternary
+
         draw_window(minesweeper, elapsed_time)
 
     close()
