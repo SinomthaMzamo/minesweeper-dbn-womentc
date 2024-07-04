@@ -69,7 +69,7 @@ class SafeTile(Tile):
 
 
     def process_reveal(self):
-        print(f'revealed SafeTile at {self.locale}')
+        # print(f'revealed SafeTile at {self.locale}')
 
         # show all tiles in neighbourhood if a totally safe tile was revealed 
         if getattr(self, "totally_safe", None):

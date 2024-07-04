@@ -1,7 +1,11 @@
+import enum
+import json
+
 import game_build.tile
 from game_build.grid import Grid
 from game_build.tile import MineTile, SafeTile, Tile
 from random import choice, sample, shuffle
+
 
 class Board:
     def __init__(self, mode):
@@ -22,7 +26,7 @@ class Board:
         difficulty_levels = {
             "sandy-baby": {"size": 50, "mine_count": 230},
             "pops": {"size": 10, "mine_count": 60},
-            "test": {"size": 4, "mine_count":3},
+            "test": {"size": 4, "mine_count": 3},
             "easy": {"size": 9, "mine_count": 10},
             "medium": {"size": 16, "mine_count": 40},
             "hard": {"size": 24, "mine_count": 99}
@@ -47,7 +51,7 @@ class Board:
         # fill up the rest of the grid with safe tiles
         for i in range(self.grid.rows):
             for j in range(self.grid.columns):
-                self.make_tile((i,j))
+                self.make_tile((i, j))
 
         for tile in self.grid.contents.flat:
             if isinstance(tile, SafeTile):
@@ -74,33 +78,36 @@ class Board:
         try:
             i, j = locale
         except TypeError:
-            pass
+            return locale
         else:
             tile_phase = self.grid.contents[i, j]
+            if is_mine:
+                print("i should be a tuple ->", tile_phase)
             # only make a tile at locales without tiles
             if isinstance(tile_phase, tuple):
                 # make tile depending on required kind
                 tile = MineTile(locale, self.tile_size) if is_mine else SafeTile(locale, self.tile_size)
                 # populate grid with tile
                 self.grid.contents[i, j] = tile
-                
+
                 return tile
 
-    def create_first_neighbourhood(self, first_move_locale):
+    def create_first_neighbourhood(self, first_move_locale) -> SafeTile:
         """
         Create the first neighbourhood of tiles around the initial move locale.
 
         Args:
         - first_move_locale (tuple): Coordinates (row, column) of the first move.
-        
+
         Returns:
         - first_tile (SafeTile): The tile at the first move locale.
         """
 
         first_tile = self.make_tile(first_move_locale)
         first_neighbourhood_locales = self.grid.tile_adjacency_map[first_move_locale]
-        [self.make_tile(loc) for loc in first_neighbourhood_locales]
-    
+        first_neighbourhood_tiles = [self.make_tile(loc) for loc in first_neighbourhood_locales]
+        first_tile.neighbours = first_neighbourhood_tiles
+
         return first_tile
 
     def get_mine_locales(self, first_move_locale):
@@ -116,21 +123,24 @@ class Board:
 
         # ensure first move's neighbourhood consists only of safe tiles
         first_move_tile = self.create_first_neighbourhood(first_move_locale)
-        
+
         # generate locales for mine tiles, these locales need to lie outside the first move's neighbourhood/radius
         mine_territory_locales = self.get_possible_mine_locales(first_move_tile)
         shuffle(mine_territory_locales)
         return sample(mine_territory_locales, self.mine_count)
 
     def deploy_mines(self, first_move_locale):
-            """
-            Deploy mines on the grid based on the first move locale.
+        """
+        Deploy mines on the grid based on the first move locale.
 
-            Args:
-            - first_move_locale (tuple): Coordinates (row, column) of the first move.
-            """
-            for mine_locale in self.get_mine_locales(first_move_locale):
-                self.make_tile(mine_locale, is_mine=True)
+        Args:
+        - first_move_locale (tuple): Coordinates (row, column) of the first move.
+        """
+        mine_locales = self.get_mine_locales(first_move_locale)
+        print(f"mine locales: {mine_locales}\npress enter to proceed")
+        for mine_locale in mine_locales:
+            mine = self.make_tile(mine_locale, is_mine=True)
+            print(mine, "at", mine_locale)
 
     def set_up_game_board(self, first_move_locale):
         """Set up the game board, including placing mines and safe tiles.
@@ -148,11 +158,12 @@ class Board:
         Args:
         - locale (tuple): Coordinates (row, column) of the tile.
         """
-        i,j = locale
+        i, j = locale
         # reveal chosen tile
         self.grid.matrix[i, j].reveal()
+        return self.grid.matrix[i, j]
 
-    def get_possible_mine_locales(self, first_move_tile):
+    def get_possible_mine_locales(self, first_move_tile: SafeTile):
         """
         Process the player's first move by determining the possible mine territory i.e. the region outside of the first move's neighbourhood tiles.
 
@@ -163,15 +174,13 @@ class Board:
         - list of tuple[int, int]: A list of possible locales where mines might be placed.
         """
 
-        x,y = first_move_tile.locale
-
-        first_neighbourhood_tiles = [self.grid.contents[x, y]] + first_move_tile.neighbours
-        print(first_neighbourhood_tiles)
-        first_neighbourhood_locales = [tile for tile in first_neighbourhood_tiles]
+        first_neighbourhood_tiles = [first_move_tile] + first_move_tile.neighbours
+        first_neighbourhood_locales = [tile.locale for tile in first_neighbourhood_tiles]
 
         possible_mine_territory_locales = [(row, col) for row in range(self.grid.rows)
                                            for col in range(self.grid.columns)
                                            if (row, col) not in first_neighbourhood_locales]
+
         return possible_mine_territory_locales
 
     def get_rows(self):
@@ -187,6 +196,11 @@ class Board:
     def get_tile_size(self, width: int):
         return width // self.get_columns()
 
+class Outcome(enum.Enum):
+    Win = "win"
+    Play = "play"
+    Lose = "lose"
+
 class Game:
     """ Runs the logic and flow of game:
         - Sets up game components i.e. tiles, grid
@@ -197,7 +211,7 @@ class Game:
             * revealing all safe tiles
 
     """
- 
+
     def __init__(self, board):
         """
         Initialize the Game object.
@@ -208,39 +222,62 @@ class Game:
         - tile_size (None): Placeholder for the size of each tile (to be set later).
         - flags_placed (int): Number of flags placed.
         """
-     
+
         self.in_play = False
         self.board = board
         # self.tile_size = None           # depends on grid dimensions and is irrelevant until GUI stage
         self.flags_placed = 0
 
-    def run_game(self, this_move, flag=False):
+    def handle_selection(self, this_move, flag=False):
         """
         Run the main game loop.
         """
-        # start the game
-        self.in_play = True
-        
+        outcome =  None
+        flagged_tile = revealed_tile = None
+        print(self.is_in_play(), "that the game is still running")
         if self.in_play:
             if flag:
-                self.handle_flag_limit_and_usage(this_move)
+                flagged_tile = self.handle_flag_limit_and_usage(this_move)
                 print("toggling flag...")
-                return
+                outcome = Outcome.Play.value
             else:
-                self.board.game_reveal(this_move)
-                if all(tile.is_revealed for tile in self.board.safe_tiles) and all(not tile.is_revealed for tile in self.board.all_mines):
+                revealed_tile = self.board.game_reveal(this_move)  # capture the revealed tile object
+                if all(tile.is_revealed for tile in self.board.safe_tiles) and all(
+                        not tile.is_revealed for tile in self.board.all_mines):
+                    outcome = Outcome.Win.value
                     self.game_over(win=True)
                 elif any(tile.is_revealed for tile in self.board.all_mines):
+                    outcome = Outcome.Lose.value
                     self.game_over(win=False)
+                else:
+                    outcome = Outcome.Play.value
+        print(self.is_in_play(), "that the game is still running")
+        """
+        {
+            "event": "win/lose/none",
+            "tile": (0,0),
+            ""
+        }
+        """
+        json_outcome = {"outcome": outcome,
+                        "tile": (flagged_tile.locale if not revealed_tile else revealed_tile.locale)}
+        path = "this_round.json"
 
+        with open(path, "w") as file:
+            json.dump(json_outcome, file)
+
+        print("saved")
+
+        return flagged_tile if not revealed_tile else revealed_tile
 
     def check_win(self):
         """
         Check if the player has won the game.
         """
         safe_tiles = self.board.safe_tiles
-        # it's a win when all safe_tiles are uncovered without uncovering a mine tile 
-        win = all(tile[0].is_revealed for tile in safe_tiles) and all(not tile[0].is_revealed for tile in self.board.all_mines)
+        # it's a win when all safe_tiles are uncovered without uncovering a mine tile
+        win = all(tile[0].is_revealed for tile in safe_tiles) and all(
+            not tile[0].is_revealed for tile in self.board.all_mines)
         if win:
             self.in_play = False
             self.game_over(win=True)
@@ -254,7 +291,6 @@ class Game:
         # uncover all mines
         for tile in all_mines:
             tile.reveal()
-
 
         # TO_DO: take note of how many were correctly flagged and show this
 
@@ -271,7 +307,7 @@ class Game:
             pass
         else:
             print("initiatiing loss sequence...")
-            self.detonate_all_mines()   
+            self.detonate_all_mines()
             print("you lose.")
         self.in_play = False
 
@@ -290,6 +326,7 @@ class Game:
             # reduce or increment available flags depending on whether a flag was placed or removed
             self.flags_placed += 1 if tile.is_flagged else -1
             print(f"Flag {'placed' if tile.is_flagged else 'removed'} at: {tile_locale}")
+        return tile
 
     def get_game_board(self) -> Board:
         return self.board
@@ -301,4 +338,10 @@ class Game:
         return self.board.mine_count
 
     def is_in_play(self):
-        return  self.in_play
+        return self.in_play
+
+    def setup(self, first_locale: tuple):
+        self.get_game_board().set_up_game_board(first_locale)
+        # start the game
+        self.in_play = True
+        self.handle_selection(first_locale)

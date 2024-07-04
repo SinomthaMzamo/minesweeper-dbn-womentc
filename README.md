@@ -6,9 +6,9 @@ tech_wednesdays pilot project: Minesweeper.
 This project is my submission to the "dbn_womenthinkcode_" tech_wednesdays initiative
 
 ## Directions
-All code files relating to the the game will go inside the directory "game files".
-Navigate to "notes_for_discussion" for practice problems and other notes on OOP.
-Extra files and guides can be found inside "pdf_guides".
+Game Files: All code files related to the game are located inside the directory "minesweeper/game_build".
+Practice Problems and Notes: Navigate to "planning.txt" for practice problems and other notes on OOP.
+Extra Files and Guides: Additional files and guides can be found inside the "pdf_guides" directory.
 
 ## Notice
 Fork the repo. Monitor the main branch for updates as the version on the main branch is what we will be building together.

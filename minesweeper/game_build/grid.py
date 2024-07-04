@@ -1,6 +1,8 @@
 import numpy as np
+
+
 # TODO : The get_matrix function currently uses a list comprehension to convert the
-#  contents list to a matrix. This might become inefficient for larger grids. 
+#  contents list to a matrix. This might become inefficient for larger grids.
 # Explore alternative libraries like numpy for efficient multi-dimensional array handling.
 
 class Grid:
@@ -28,7 +30,7 @@ class Grid:
         self.tile_adjacency_map = self.get_tile_adjacency()
         self.set_tile_locales()
         print()
-            
+
     def get_matrix(self):
         """
         Converts the list of grid items into a matrix format.
@@ -42,14 +44,14 @@ class Grid:
         ]
         """
         return self.contents
-    
+
     def get_tile_adjacency(self):
         """
         Generate a map of tile locales to their neighboring tiles.
 
         Returns:
             dict: A dictionary mapping tile locales to lists of neighboring tiles.
-        
+
             eg. an excerpt showing the neighbourhoods of the first row (3x3):
                 {
                         "(0,0)": [[],[],[]],
@@ -57,24 +59,24 @@ class Grid:
                         "(0,2)": [[],[],[]],
                 }
         """
-        matrix = self.matrix
-        tile_adjacency = {}
 
-        for x, row in enumerate(matrix):
+        tile_adjacency = {}
+        for x, row in enumerate(self.matrix):
             for y, _ in enumerate(row):
-                possible_neighbours = self.generate_full_neighbourhood_locales((x,y))
-                neighbours_on_grid = [(i,j) for i,j in possible_neighbours if i in range(self.rows) and j in range(self.columns)]
-                tile_adjacency[(x,y)] = neighbours_on_grid
+                possible_neighbours = self.generate_full_neighbourhood_locales((x, y))
+                neighbours_on_grid = [(i, j) for i, j in possible_neighbours if
+                                      i in range(self.rows) and j in range(self.columns)]
+                tile_adjacency[(x, y)] = neighbours_on_grid
 
         return tile_adjacency
-    
+
     def update_adjacency(self):
         for row in range(self.rows):
             for col in range(self.columns):
-                neighbours = self.tile_adjacency_map[(row,col)]
-                self.contents[row,col].neighbours = self.tile_adjacency_map[(row,col)] = [self.contents[i,j] for i,j in neighbours]
-                 
-    
+                neighbours = self.tile_adjacency_map[(row, col)]
+                self.contents[row, col].neighbours = self.tile_adjacency_map[(row, col)] = [self.contents[i, j] for i, j
+                                                                                            in neighbours]
+
     def generate_full_neighbourhood_locales(self, locale):
         """
         Generate a list of coordinates representing the full neighborhood of a given locale.
@@ -85,21 +87,21 @@ class Grid:
         Returns:
             list of tuple[int, int]: List of coordinates representing the full neighborhood.
         """
-        i,j = locale
-        
+        i, j = locale
+
         # get the rows of cells that make up a neighbourhood
-        top_row = [(i-1,col) for col in range(j-1,j+2)]
-        tile_row = [(i,col) for col in range(j-1,j+2)]
-        bottom_row = [(i+1,col) for col in range(j-1,j+2)]
-        
+        top_row = [(i - 1, col) for col in range(j - 1, j + 2)]
+        tile_row = [(i, col) for col in range(j - 1, j + 2)]
+        bottom_row = [(i + 1, col) for col in range(j - 1, j + 2)]
+
         # exclude the tile in question and there you have it
         tile_row.remove(locale)
 
-        neighbourhood = top_row     \
-                      + tile_row     \
-                      + bottom_row
+        neighbourhood = top_row \
+                        + tile_row \
+                        + bottom_row
         return neighbourhood
-    
+
     def get_tile_locales(self):
         """
         Get the coordinates of all tiles in the grid.
@@ -111,9 +113,9 @@ class Grid:
         coords = []
         for row in range(self.rows):
             for col in range(self.columns):
-                coords.append((row,col))
+                coords.append((row, col))
         return coords
-    
+
     def set_tile_locales(self):
         """
         Set the coordinates for each tile in the grid.
@@ -122,8 +124,8 @@ class Grid:
         """
         coords = self.get_tile_locales()
 
-        for i,j in coords:
-            self.contents[i,j]=(i,j)
+        for i, j in coords:
+            self.contents[i, j] = (i, j)
 
     def replace_locale_with_tile_on_grid(self, tile):
         """
@@ -133,13 +135,12 @@ class Grid:
             tile (Tile): Tile object to replace the locale tuple in contents.
         """
         # get index of list containing tuple with tile's coords
-        i,j = tile
-        self.contents[i,j] = tile
+        i, j = tile
+        self.contents[i, j] = tile
 
 
-    
 
 
-  
+
 
 
