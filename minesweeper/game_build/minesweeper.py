@@ -26,7 +26,7 @@ class Board:
         difficulty_levels = {
             "sandy-baby": {"size": 50, "mine_count": 230},
             "pops": {"size": 10, "mine_count": 60},
-            "test": {"size": 4, "mine_count": 3},
+            "test": {"size": 4, "mine_count": 1},
             "easy": {"size": 9, "mine_count": 10},
             "medium": {"size": 16, "mine_count": 40},
             "hard": {"size": 24, "mine_count": 99}
@@ -36,7 +36,7 @@ class Board:
         self.mine_count = mode_info["mine_count"]
         rows = columns = mode_info.get("size", 9)
         self.grid = Grid(rows, columns)
-        print(f'game settings: {mode.upper()} {rows}x{columns}')
+        print(f'game settings: {mode.upper()} {rows}x{columns}', "mines:", self.mine_count)
 
     def set_up_game_tiles(self, first_move_locale):
         """
@@ -222,11 +222,17 @@ class Game:
         - tile_size (None): Placeholder for the size of each tile (to be set later).
         - flags_placed (int): Number of flags placed.
         """
-
+        self.refresh()
         self.in_play = False
         self.board = board
         # self.tile_size = None           # depends on grid dimensions and is irrelevant until GUI stage
         self.flags_placed = 0
+
+    def refresh(self):
+        path = "this_round.json"
+
+        with open(path, "w") as file:
+            json.dump("", file)
 
     def handle_selection(self, this_move, flag=False):
         """

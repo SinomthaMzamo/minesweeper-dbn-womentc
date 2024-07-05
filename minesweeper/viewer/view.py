@@ -129,7 +129,7 @@ def draw_board(board: Board):
 
                         # update revealed mine tile with image
                         revealed_mine_tile_img.fill(colours.BEIGE)
-                        loss_sequence = check_for_special_event(row,col, outcome, event_kind="lose")
+                        loss_sequence = check_for_special_event(row, col, outcome, event_kind="lose")
                         if not loss_sequence:
                             revealed_mine_tile_img.blit(bomb, (bomb_x, bomb_y))
                             screen.blit(revealed_mine_tile_img, (x, y))
@@ -140,17 +140,17 @@ def draw_board(board: Board):
                             screen.blit(revealed_detonated_mine_tile_img, (x, y))
                             print("tile at", tuple(outcome["tile"]), "set it off")
 
-
     pygame.display.flip()
 
-def read_json():
+
+def read_json() -> dict:
     # Load data from a JSON file
     with open("this_round.json", 'r') as json_file:
         outcome = json.load(json_file)
-    return outcome
+    return outcome if outcome else {}
 
 
-def check_for_special_event(row,col, outcome, event_kind="win"):
+def check_for_special_event(row, col, outcome, event_kind="win"):
     is_event = outcome["outcome"] == event_kind
     special = (row, col) == tuple(outcome["tile"])
     # print((row, col), "vs", tuple(outcome["tile"]))
@@ -213,14 +213,14 @@ def main():
     mode = choice(game_modes)
 
     # Create Board instance
-    board1 = Board("easy")
+    board1 = Board("test")
 
     # Create Game instance
     minesweeper = Game(board1)
     start_time = None
     game_duration = 0
     running = True
-
+    confetti = visuals.create_confetti(850)
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -245,11 +245,13 @@ def main():
         if minesweeper.is_in_play():
             game_duration = elapsed_time
         outcome = read_json()
-        if outcome["outcome"] == "win":
-            confetti = visuals.create_confetti(850)
+        is_win = outcome.get("outcome") == "win"
+        print(is_win)
+        if is_win:
             for atom in confetti:
                 atom.update()
                 atom.draw(screen)
+            pygame.display.flip()
         draw_window(minesweeper, game_duration)
 
     close()

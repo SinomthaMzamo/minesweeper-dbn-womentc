@@ -40,15 +40,16 @@ class Confetti:
         self.colour = random.choice(COLORS)
         self.speed_x = random.uniform(-2,2)
         self.speed_y = random.uniform(1,3)
-        self.gravity = 0.00711              # increments the vertical speed
+        self.gravity = 0.011              # increments the vertical speed
 
     def update(self):
         self.x += self.speed_x
         self.y += self.speed_y
         self.speed_y += self.gravity
 
-    def draw(self, screen):
-        pygame.draw.rect(screen, self.colour, (self.x, self.y, 3, self.height))
+    def draw(self, screen_parm):
+        pygame.draw.rect(screen_parm, self.colour, (self.x, self.y, 3, self.height))
+        print("there should be colour!!")
 
 
 def create_confetti(num_particles):
