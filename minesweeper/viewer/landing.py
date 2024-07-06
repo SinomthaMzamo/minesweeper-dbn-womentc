@@ -1,5 +1,6 @@
 from pygame import QUIT
 
+from button import Button as better
 from constants import *
 import fonts
 import pygame
@@ -18,6 +19,7 @@ HELP_CONTENT = [
     "Avoid mines to win!",
     "Click 'X' or the top right corner to close this window.",
 ]
+
 
 class Button:
     def __init__(self, x, y, width, height, text, callback):
@@ -46,12 +48,13 @@ class Landing:
     def __init__(self):
         self.tile_size = 150
 
-        self.help_button = Button(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2, WINDOW_WIDTH, WINDOW_HEIGHT, "Help",
-                                    handle_help_click)
+        self.help_button = better(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2, WINDOW_WIDTH, WINDOW_HEIGHT, "Help",
+                                  pygame.font.Font(fonts.ROBOTO, 30),
+                                  colours.RED, colours.PINK, colours.CELADON_GREEN, handle_help_click)
         # self.mode_button = pygame.Button(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2, WINDOW_WIDTH, WINDOW_HEIGHT, "Choose Board",
         #                             handle_mode_click)
 
-    def generate_flagged_tile_image(self, image_path:str, colour_path:str=colours.ASH_GREY):
+    def generate_flagged_tile_image(self, image_path: str, colour_path: str = colours.ASH_GREY):
         size = self.tile_size
         flag_icon = pygame.image.load(image_path).convert_alpha()
         flag_icon = pygame.transform.scale(flag_icon, (size - 5, size - 5))
@@ -59,7 +62,7 @@ class Landing:
         flagged_tile_img.fill(colour_path)
         return flagged_tile_img, flag_icon
 
-    def generate_revealed_bomb_image(self, image_path:str, colour_path=colours.TOMATO):
+    def generate_revealed_bomb_image(self, image_path: str, colour_path=colours.TOMATO):
         size = self.tile_size
         bomb = pygame.image.load(image_path).convert_alpha()
         bomb = pygame.transform.scale(bomb, (size - 5, size - 5))
@@ -120,25 +123,28 @@ def handle_help_click():
     pygame.display.quit()
 
 
-
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 window.fill(colours.WHITE)
 pygame.display.set_caption("Minesweeper Help")
-help_button = Button(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2, WINDOW_WIDTH//4, WINDOW_HEIGHT//4, "Help", handle_help_click)
-help_button.draw(window)
+help_button = better(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2, 120, 120, "Help",
+                     pygame.font.Font(fonts.ROBOTO, 30),
+                     colours.RED, colours.PINK, colours.CELADON_GREEN, handle_help_click)
+
 landing = Landing()
 flag_surface, flag_icon = landing.generate_flagged_tile_image("flag.png", colours.SLATE_GREY)
 flag_icon = pygame.transform.rotate(flag_icon, 45)
 mine_surface, mine_icon = landing.generate_revealed_bomb_image("spikes.png", colours.SLATE_GREY)
-window.blit(flag_surface, (WINDOW_WIDTH//4, WINDOW_HEIGHT//4))
-window.blit(flag_icon, (WINDOW_WIDTH//4, WINDOW_HEIGHT//4))
-window.blit(mine_surface, (WINDOW_WIDTH*0.8, WINDOW_HEIGHT*0.8))
-window.blit(mine_icon, (WINDOW_WIDTH*0.7, WINDOW_HEIGHT*0.7))
+window.blit(flag_surface, (WINDOW_WIDTH // 4, WINDOW_HEIGHT // 4))
+window.blit(flag_icon, (WINDOW_WIDTH // 4, WINDOW_HEIGHT // 4))
+window.blit(mine_surface, (WINDOW_WIDTH * 0.8, WINDOW_HEIGHT * 0.8))
+window.blit(mine_icon, (WINDOW_WIDTH * 0.7, WINDOW_HEIGHT * 0.7))
 flag_surface, flag_icon = landing.generate_flagged_tile_image("grey.png", colours.BEIGE)
 flag_icon = pygame.transform.rotate(flag_icon, 45)
-window.blit(flag_surface, (WINDOW_WIDTH*0.8, WINDOW_HEIGHT//4))
-window.blit(flag_icon, (WINDOW_WIDTH*0.8, WINDOW_HEIGHT//4))
+window.blit(flag_surface, (WINDOW_WIDTH * 0.8, WINDOW_HEIGHT // 4))
+window.blit(flag_icon, (WINDOW_WIDTH * 0.8, WINDOW_HEIGHT // 4))
 while True:
+    help_button.draw(window)
+
     # Check for button clicks
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -148,3 +154,4 @@ while True:
         elif event.type == QUIT:
             pygame.quit()
     pygame.display.flip()
+    pygame.time.Clock().tick(3)

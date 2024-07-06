@@ -3,6 +3,7 @@ class Tile:
         Shared attributes and methods will be defined here 
         to introduce the idea of 'Inheritance' in OOP.
     """
+
     def __init__(self, locale, size):
         """
         Initialize a Tile object.
@@ -16,7 +17,7 @@ class Tile:
         self.is_revealed = False
         self.is_flagged = False
 
-    def reveal(self):        
+    def reveal(self):
         """
         Reveal the tile and handle the consequences.
 
@@ -27,10 +28,8 @@ class Tile:
         self.is_revealed = True
         self.process_reveal()
 
-
     def process_reveal(self):
         print(f'revealed generic tile at {self.locale}')
-
 
     def toggle_flag(self):
         """
@@ -38,6 +37,7 @@ class Tile:
         """
         if not self.is_revealed:
             self.is_flagged = not self.is_flagged
+
 
 class SafeTile(Tile):
     """
@@ -67,20 +67,23 @@ class SafeTile(Tile):
         self.neighbours = []
         self.totally_safe = None
 
-
+    # TODO : Revealing a SafeTile with no mines
+    #  As a revealed completely SafeTile of the minesweeper game
+    #  I want to force neighbouring tiles to be revealed
+    #  So that the player can clear the board quickly
     def process_reveal(self):
-        # print(f'revealed SafeTile at {self.locale}')
-
         # show all tiles in neighbourhood if a totally safe tile was revealed 
         if getattr(self, "totally_safe", None):
             print(f'doing bubble for neighbours of {self.locale}...')
             for tile in self.neighbours:
                 tile.reveal()
+        # todo Consider Efficiency: Revealing all neighbors recursively can be slow for large
+        #  boards. Explore alternative approaches like using a queue
+        #  or modifying the reveal logic to be iterative.
 
         # show number of unsafe neighbours if a somewhat safe tile was revealed 
         else:
             self.show_neigbourhood_info()
-        
 
     def count_neighbourhood_mines(self):
         """
@@ -92,13 +95,18 @@ class SafeTile(Tile):
         unsafe_neighbours = [n for n in self.neighbours if not hasattr(n, "totally_safe") and not isinstance(n, tuple)]
         face_num = len(unsafe_neighbours)
         return face_num
-    
+
+    # TODO : Revealing a SafeTile with some mines
+    #  As a revealed SafeTile of the minesweeper game
+    #  I want to display the number of MineTiles present in my neighbourhood of tiles
+    #  So that the player can make informed decisions about avoiding the MineTiles
     def show_neigbourhood_info(self):
         """
         Display information about the neighborhood if the tile is revealed.
         """
         if self.is_revealed:
             print(self.count_neighbourhood_mines())
+
 
 class MineTile(Tile):
     """
@@ -112,7 +120,7 @@ class MineTile(Tile):
     - is_flagged (bool): Indicates whether the tile is flagged.
     
     """
-    
+
     def __init__(self, locale, size):
         """
         Initialize a MineTile object.

@@ -1,5 +1,11 @@
 import unittest
 from game_build.grid import *
+# TODO : the grid story:
+#  The grid records the adjacency of its cells
+#  As a square grid of cells which will represent minesweeper tiles
+#  I want to keep track of each cell's neighbourhood/surrounding cells
+#  So that the board can use them to generate the game tiles upon the first move
+
 class TestGrid(unittest.TestCase):
     def setUp(self):
         self.rows = self.columns = 3
@@ -31,7 +37,7 @@ class TestGrid(unittest.TestCase):
             }
         
         self.expected_iterables = {"contents": self.expected_contents, "matrix":self.expected_matrix, "tile_adjacency_map":self.expected_adjacency}
-        
+
     def test_grid_initial_state_basics(self):
 
         # Test basic attributes
@@ -77,4 +83,60 @@ class TestGrid(unittest.TestCase):
         pass
 
     def test_make_tile(self):
+        pass
+
+    # todo: grid records adjacency before game tile generation
+    #   given: the grid is a square
+    #   and: the first move has not been made
+    #   when: the grid records the adjacency of its cells
+    #   then: the grid should contain a map containing this adjacency
+    #   and: the key is a tuple of the cell's location
+    #   and: the value type is a list of tuples representing the locations of cells around the key cell
+    def test_grid_adjacency_before_first_move(self):
+        pass
+
+    # todo: grid records adjacency before game tile generation
+    #   given: the grid is a square
+    #   and: the first move has not been made
+    #   and: the grid contains a location that is outside of its boarders
+    #   when: the grid records the adjacency of its cells
+    #   then: an out of bounds exception should be thrown
+    def test_adjacency_before_first_move_cell_found_off_grid(self):
+        pass
+
+    # todo: grid records adjacency upon (first move) game tile generation
+    #   given: the grid is a square
+    #   and: the first move has been made
+    #   when: the grid records the adjacency of its cells
+    #   then: the grid should contain a map containing this adjacency
+    #   and: the key is a tuple of the cell's location
+    #   and: the value type is a list of subclasses of Tile representing the tile objects around the key cell
+    #   and: the tile objects must represent tiles at locations around the key cell
+    def test_grid_adjacency_upon_first_move(self):
+        pass
+
+    # todo: grid records adjacency of a corner tile upon (first move) game tile generation
+    #   given: the grid is a square
+    #   and: the first move has been made
+    #   when: the grid records the adjacency of its cells
+    #   then: the grid should contain a map containing this adjacency
+    #   and: the entry of the corner cell's key is a tuple of the cell's location
+    #   and: the value type is a list of 3 instances of subclasses of Tile
+    #   representing the tile objects around the key cell
+    #   and: the tile objects must represent tiles at locations around the key cell
+    #   and: the tile objects must represent tiles at locations on the grid
+    def test_grid_corner_cell_adjacency(self):
+        pass
+
+    # todo: grid records adjacency of a center tile upon (first move) game tile generation
+    #   given: the grid is a 3x3 square
+    #   and: the first move has been made
+    #   when: the grid records the adjacency of its cells
+    #   then: the grid should contain a map containing this adjacency
+    #   and: the entry of the center cell's key is a tuple of the cell's location
+    #   and: the value type is a list of 8 instances of subclasses of Tile
+    #   representing the tile objects around the key cell
+    #   and: the tile objects must represent tiles at locations around the key cell
+    #   and: the tile objects must represent tiles at locations on the grid
+    def test_grid_centre_cell_adjacency(self):
         pass

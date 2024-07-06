@@ -17,6 +17,11 @@ class Board:
         self.safe_tiles = []
         self.apply_game_settings(mode)
 
+    # TODO : the board story:
+    #  The board generates a grid and game configuration from user selected mode
+    #  As a square board of minesweeper tiles
+    #  I want to configure the minesweeper game based on player stipulations
+    #  So that i can generate the desired grid
     def apply_game_settings(self, mode):
         """       **** In development
         Set up the game modes and define difficulty levels and constructs grid accordingly.
@@ -38,6 +43,10 @@ class Board:
         self.grid = Grid(rows, columns)
         print(f'game settings: {mode.upper()} {rows}x{columns}', "mines:", self.mine_count)
 
+    # TODO :  The board populates a grid with SafeTiles and MineTiles based on game configuration upon first move
+    #  As a square board of minesweeper tiles
+    #  I want to configure the minesweeper game based on player's first move
+    #  So that I can randomise the placement of bombs, while ensuring the first neighbourhood is safe
     def set_up_game_tiles(self, first_move_locale):
         """
         Set up the game grid and tiles.
@@ -45,7 +54,7 @@ class Board:
         Args:
         - first_move_locale (tuple): Coordinates (row, column) of the first move.
         """
-        # randomly place mines outside of first move radius 
+        # randomly place mines outside first move radius
         self.deploy_mines(first_move_locale)
 
         # fill up the rest of the grid with safe tiles
@@ -196,10 +205,12 @@ class Board:
     def get_tile_size(self, width: int):
         return width // self.get_columns()
 
+
 class Outcome(enum.Enum):
     Win = "win"
     Play = "play"
     Lose = "lose"
+
 
 class Game:
     """ Runs the logic and flow of game:
@@ -234,11 +245,16 @@ class Game:
         with open(path, "w") as file:
             json.dump("", file)
 
+    # TODO :  The game processes player moves according to the game rules
+    #  As a minesweeper game in progress
+    #  I want to process player moves according to the game rules
+    #  So that I can manage the state of the game and record the outcomes of player moves
+
     def handle_selection(self, this_move, flag=False):
         """
         Run the main game loop.
         """
-        outcome =  None
+        outcome = None
         flagged_tile = revealed_tile = None
         print(self.is_in_play(), "that the game is still running")
         if self.in_play:
@@ -276,6 +292,10 @@ class Game:
 
         return flagged_tile if not revealed_tile else revealed_tile
 
+    # TODO :  The player reveals all the safe tiles on the board
+    #  As a minesweeper game in progress
+    #  I want to determine whether all safe tiles have been revealed
+    #  So that the game is ended in a win
     def check_win(self):
         """
         Check if the player has won the game.
@@ -288,6 +308,10 @@ class Game:
             self.in_play = False
             self.game_over(win=True)
 
+    # TODO :  The game detonates all remaining mines and ends the game when a mine tile is revealed
+    #  As a minesweeper game in progress
+    #  I want to detonate all the mines on the board
+    #  So that the game is ended in a loss
     def detonate_all_mines(self):
         """
         Detonate all mine tiles and end the game.
@@ -299,6 +323,7 @@ class Game:
             tile.reveal()
 
         # TO_DO: take note of how many were correctly flagged and show this
+        # should i reset in_play here?
 
     def game_over(self, win=False):
         """         **** In development
@@ -317,6 +342,11 @@ class Game:
             print("you lose.")
         self.in_play = False
 
+    # TODO :  The game allows the player to toggle a limited number of flags
+    #  As a minesweeper game in progress
+    #  I want to regulate flag availability and usage
+    #  So that the player can't place more flags than there are mines
+    #  and can strategically mark/unmark suspected mine locations.
     def handle_flag_limit_and_usage(self, tile_locale):
         """
         Handle flag limit and usage logic.

@@ -4,6 +4,7 @@ from random import choice
 import confetti as visuals
 from game_build.minesweeper import Board, Game
 from game_build.tile import SafeTile
+from button import Button
 import sys
 import colours
 import fonts
@@ -11,6 +12,8 @@ import time
 
 # Initialize Pygame
 pygame.init()
+clock = pygame.time.Clock()
+FPS = 20
 
 # Define overall window dimensions
 WINDOW_WIDTH = 720
@@ -48,6 +51,8 @@ colour_map = {
     7: colours.PALE_YELLOW,
     8: colours.RED
 }
+
+confetti = visuals.create_confetti(850)
 
 
 def draw_board(board: Board):
@@ -124,11 +129,12 @@ def draw_board(board: Board):
                     else:
 
                         # find image centre
-                        bomb_x = size * x // 2 - (size * x - 10) // 2
+                        bomb_x = size * x // 2 - (size * x - 5) // 2
                         bomb_y = size * y // 2 - (size * y - 5) // 2
 
                         # update revealed mine tile with image
-                        revealed_mine_tile_img.fill(colours.BEIGE)
+                        colour = choice([colours.BEIGE, colours.RED])
+                        revealed_mine_tile_img.fill(colour)
                         loss_sequence = check_for_special_event(row, col, outcome, event_kind="lose")
                         if not loss_sequence:
                             revealed_mine_tile_img.blit(bomb, (bomb_x, bomb_y))
@@ -141,6 +147,7 @@ def draw_board(board: Board):
                             print("tile at", tuple(outcome["tile"]), "set it off")
 
     pygame.display.flip()
+    clock.tick(FPS)
 
 
 def read_json() -> dict:
@@ -188,11 +195,39 @@ def draw_window(game: Game, elapsed_time: int):
     Args:
     - board: The Minesweeper board object to draw.
     """
+    global confetti
     screen.fill(colours.SNOW)
     update_flags(game)
     track_time(game, elapsed_time)
+    change_mode()
     draw_board(game.get_game_board())
-    pygame.display.update()
+    # win
+
+    outcome = read_json()
+    is_win = outcome.get("outcome") == "win"
+    is_lose = outcome.get("outcome") == "lose"
+    second_batch = []
+    # if all(atom.y + 50 >= WINDOW_HEIGHT//2 for atom in confetti):  # remake confetti if they've all disappeared
+    #     second_batch = visuals.create_confetti(850)
+
+    if all(atom.y + 50 >= WINDOW_HEIGHT for atom in confetti):  # remake confetti if they've all disappeared
+        confetti = visuals.create_confetti(850)
+    if is_win:
+        throw_confetti(screen, confetti)
+        throw_confetti(screen, second_batch)
+        win_image_paths = ["win-purple.png", "win-green.png", "win-pink.png", "win-purple.png", "win-green.png",
+                           "win-pink.png"]
+        win_image_path = choice(win_image_paths)
+        win_image = pygame.image.load(win_image_path).convert_alpha()
+        win_image = pygame.transform.scale(win_image, (150, 150))
+        screen.blit(win_image, (GRID_TOP_LEFT_X - 156, WINDOW_HEIGHT // 2 - 60))
+    elif is_lose:
+        loser_img_path = "loser.png"
+        loser_img = pygame.image.load(loser_img_path).convert_alpha()
+        loser_img = pygame.transform.scale(loser_img, (150, 150))
+        screen.blit(loser_img, (GRID_TOP_LEFT_X - 150, WINDOW_HEIGHT // 2 - 60))
+    pygame.display.flip()
+    clock.tick(FPS)
 
 
 def close():
@@ -213,7 +248,7 @@ def main():
     mode = choice(game_modes)
 
     # Create Board instance
-    board1 = Board("test")
+    board1 = Board("TEST")
 
     # Create Game instance
     minesweeper = Game(board1)
@@ -244,17 +279,21 @@ def main():
         elapsed_time = 0 if start_time is None else int(time.time() - start_time)  # set it to none and then use ternary
         if minesweeper.is_in_play():
             game_duration = elapsed_time
-        outcome = read_json()
-        is_win = outcome.get("outcome") == "win"
-        print(is_win)
-        if is_win:
-            for atom in confetti:
-                atom.update()
-                atom.draw(screen)
-            pygame.display.flip()
+        # outcome = read_json()
+        # is_win = outcome.get("outcome") == "win"
+        # print(is_win)
+        # if is_win:
+        #     throw_confetti(screen, confetti)
+        # pygame.display.flip()
         draw_window(minesweeper, game_duration)
 
     close()
+
+
+def throw_confetti(screen_parm, confetti):
+    for atom in confetti:
+        atom.update()
+        atom.draw(screen_parm)
 
 
 def update_flags(game: Game):
@@ -271,15 +310,21 @@ def update_flags(game: Game):
 
 
 def track_time(game: Game, elapsed_time: int):
-    clock = pygame.image.load("clock.png").convert_alpha()
-    clock = pygame.transform.scale(clock, (50, 50))
-    screen.blit(clock, (GRID_TOP_LEFT_X - 50 * 2 + 5, 150))
+    clock_icon = pygame.image.load("clock.png").convert_alpha()
+    clock_icon = pygame.transform.scale(clock_icon, (50, 50))
+    screen.blit(clock_icon, (GRID_TOP_LEFT_X - 50 * 2 + 5, 150))
 
     timer_font = pygame.font.Font(fonts.GEOLOGICA, 20)
     timer_img = timer_font.render(f"{elapsed_time // 60:02}:{elapsed_time % 60:02}", True, colours.BLACK)
     screen.blit(timer_img, (GRID_TOP_LEFT_X - 50 * 3 + 60, 200))
 
 
+def change_mode():
+    mode_screen = None
+    mode_button = Button(GRID_TOP_LEFT_X-150, WINDOW_HEIGHT*0.8, 120, 32, "mode", pygame.font.Font(fonts.GEOLOGICA, 30),
+                         colours.RED, colours.PINK, colours.CELADON_GREEN, mode_screen)
+
+    mode_button.draw(screen)
 def click_is_on_grid(click_position: tuple):
     click_x, click_y = click_position
     bottom_right = GRID_TOP_LEFT_X + GRID_WIDTH, GRID_TOP_LEFT_Y + GRID_HEIGHT

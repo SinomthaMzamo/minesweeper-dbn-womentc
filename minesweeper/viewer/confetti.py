@@ -38,9 +38,9 @@ class Confetti:
         self.x, self.y = x, y
         self.height = random.randint(5,12)
         self.colour = random.choice(COLORS)
-        self.speed_x = random.uniform(-2,2)
+        self.speed_x = random.uniform(-4,2)
         self.speed_y = random.uniform(1,3)
-        self.gravity = 0.011              # increments the vertical speed
+        self.gravity = 0.1             # increments the vertical speed
 
     def update(self):
         self.x += self.speed_x
@@ -56,7 +56,7 @@ def create_confetti(num_particles):
     confetti_particles = []
     for _ in range(num_particles):
         x = random.randint(0, 800)
-        y = random.randint(0, 12)
+        y = random.randint(0, 250)
         confetti_particles.append(Confetti(x, y))
     return confetti_particles
 

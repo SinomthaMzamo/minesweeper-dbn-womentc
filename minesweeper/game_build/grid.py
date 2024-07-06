@@ -1,9 +1,11 @@
 import numpy as np
 
 
-# TODO : The get_matrix function currently uses a list comprehension to convert the
-#  contents list to a matrix. This might become inefficient for larger grids.
-# Explore alternative libraries like numpy for efficient multi-dimensional array handling.
+# TODO : the grid story:
+#  The grid records the adjacency of its tiles
+#  As a square grid of minesweeper tiles
+#  I want to keep track of each tile's neighbourhood/surrounding tiles
+#  So that the board can use them to generate the game upon the first move
 
 class Grid:
     def __init__(self, rows, columns):
