@@ -356,12 +356,15 @@ class Game:
         """
         tile = self.get_game_board().get_tile_from_locale(tile_locale)
 
-        # don't place a flag if flag limit reached
-        if self.flags_placed <= self.board.mine_count or not tile.is_flagged:
+        # if flags placed < limit proceed as normal
+        if self.flags_placed < self.board.mine_count:
             tile.toggle_flag()
             # reduce or increment available flags depending on whether a flag was placed or removed
             self.flags_placed += 1 if tile.is_flagged else -1
-            print(f"Flag {'placed' if tile.is_flagged else 'removed'} at: {tile_locale}")
+        else:
+            if tile.is_flagged:
+                tile.toggle_flag()
+                self.flags_placed -= 1
         return tile
 
     def get_game_board(self) -> Board:

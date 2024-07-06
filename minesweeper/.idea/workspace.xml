@@ -5,18 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e5bd877-bf12-47c5-9878-577baf1b4368" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../game_build/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../game_build/grid.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../game_build/minesweeper.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../game_build/tile.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tests/test_game_build/test_grid.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tests/test_game_build/test_minesweeper.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tests/test_game_build/test_tile.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tests/test_main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../viewer/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../viewer/colours.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../viewer/fonts.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../viewer/minesweeper.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_build/minesweeper.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_build/minesweeper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/landing.py" beforeDir="false" afterPath="$PROJECT_DIR$/viewer/landing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/this_round.json" beforeDir="false" afterPath="$PROJECT_DIR$/viewer/this_round.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/viewer/view.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,9 +19,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2iHwzYxW76VLIpaXoieS4j8f8GQ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -36,6 +29,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.landing.executor": "Run",
     "Python.main.executor": "Run",
     "Python.view.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",

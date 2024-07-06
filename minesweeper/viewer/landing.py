@@ -128,7 +128,7 @@ window.fill(colours.WHITE)
 pygame.display.set_caption("Minesweeper Help")
 help_button = better(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2, 120, 120, "Help",
                      pygame.font.Font(fonts.ROBOTO, 30),
-                     colours.RED, colours.PINK, colours.CELADON_GREEN, handle_help_click)
+                     colours.ORANGE, colours.PINK, colours.CELADON_GREEN, handle_help_click)
 
 landing = Landing()
 flag_surface, flag_icon = landing.generate_flagged_tile_image("flag.png", colours.SLATE_GREY)

@@ -146,8 +146,8 @@ def draw_board(board: Board):
                             screen.blit(revealed_detonated_mine_tile_img, (x, y))
                             print("tile at", tuple(outcome["tile"]), "set it off")
 
-    pygame.display.flip()
-    clock.tick(FPS)
+    # pygame.display.flip()
+    # clock.tick(FPS)
 
 
 def read_json() -> dict:
@@ -248,7 +248,7 @@ def main():
     mode = choice(game_modes)
 
     # Create Board instance
-    board1 = Board("TEST")
+    board1 = Board("EASY")
 
     # Create Game instance
     minesweeper = Game(board1)
@@ -312,17 +312,17 @@ def update_flags(game: Game):
 def track_time(game: Game, elapsed_time: int):
     clock_icon = pygame.image.load("clock.png").convert_alpha()
     clock_icon = pygame.transform.scale(clock_icon, (50, 50))
-    screen.blit(clock_icon, (GRID_TOP_LEFT_X - 50 * 2 + 5, 150))
+    screen.blit(clock_icon, (GRID_TOP_LEFT_X - 50 * 2 , 150))
 
     timer_font = pygame.font.Font(fonts.GEOLOGICA, 20)
     timer_img = timer_font.render(f"{elapsed_time // 60:02}:{elapsed_time % 60:02}", True, colours.BLACK)
-    screen.blit(timer_img, (GRID_TOP_LEFT_X - 50 * 3 + 60, 200))
+    screen.blit(timer_img, (GRID_TOP_LEFT_X - 50 * 3 + 45, 200))
 
 
 def change_mode():
     mode_screen = None
     mode_button = Button(GRID_TOP_LEFT_X-150, WINDOW_HEIGHT*0.8, 120, 32, "mode", pygame.font.Font(fonts.GEOLOGICA, 30),
-                         colours.RED, colours.PINK, colours.CELADON_GREEN, mode_screen)
+                         colours.YELLOW, colours.ORANGE, colours.CELADON_GREEN, mode_screen)
 
     mode_button.draw(screen)
 def click_is_on_grid(click_position: tuple):
