@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3e5bd877-bf12-47c5-9878-577baf1b4368" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/demo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_build/minesweeper.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_build/minesweeper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._BoardPen.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/.___init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/.___pycache__" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._alarm-clock-icon-clock-icon-networking-icon-hotels-icon-white-black-text-circle-logo-symbol-png-clipart.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._clock-11549399846g40vgnpdkc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._clock.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._colour-clock.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._colours.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._confetti.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._constants.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._customiseBoard.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._cute-clock.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._flag.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._fonts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._fonts.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._foot-mine.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._grey-flag.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._grey-flag.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._grey.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._icons8-land-mine-100.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._icons8-land-mine-48.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._icons8-land-mine-50.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._icons8-land-mine-96.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._icons8-land-mine-windows-11-color" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._input_handler.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._land-mine.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._landing.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._landingGnome.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._light-clock.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._lose.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._loser.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._mine-custom.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._mine-detonated.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._mine.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._minesweeper.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._pretty-bomb.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._prettymines.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._sea-mine.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._simple-clock.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._simple_bomb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._spikeball.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._spikes-full.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._spikes.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._teller-mine.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._this-mine.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._this_round.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._view.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._win-green.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._win-pink.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/._win-purple.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/button.py" beforeDir="false" afterPath="$PROJECT_DIR$/viewer/button.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/confetti.py" beforeDir="false" afterPath="$PROJECT_DIR$/viewer/confetti.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/fonts.py" beforeDir="false" afterPath="$PROJECT_DIR$/viewer/fonts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/this_round.json" beforeDir="false" afterPath="$PROJECT_DIR$/viewer/this_round.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/viewer/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/viewer/view.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2iHwzYxW76VLIpaXoieS4j8f8GQ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.demo.executor&quot;: &quot;Run&quot;,
+    &quot;Python.fonts.executor&quot;: &quot;Run&quot;,
+    &quot;Python.landing.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.minesweeper.executor&quot;: &quot;Run&quot;,
+    &quot;Python.view.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/sinom/Downloads/minesweeper-dbn-womentc/minesweeper&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-babbdf50b680-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.15989.155" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3e5bd877-bf12-47c5-9878-577baf1b4368" name="Changes" comment="" />
+      <created>1719161081526</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1719161081526</updated>
+    </task>
+    <servers />
+  </component>
+</project>
