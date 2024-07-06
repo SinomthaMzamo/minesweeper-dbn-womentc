@@ -94,10 +94,6 @@ def draw_help_page(screen):
         screen.blit(text_surface, (10, y_pos))  # Adjust left margin
         y_pos += text_surface.get_height() + 5  # Add spacing between lines
 
-    # Optional: Add a close button (replace with your button handling logic)
-    # close_button = Button(screen_width - 50, 10, 40, 20, "X", handle_close_click)
-    # close_button.draw(screen)
-
 
 def handle_help_click():
     """
