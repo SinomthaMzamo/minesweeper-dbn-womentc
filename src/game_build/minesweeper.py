@@ -6,6 +6,21 @@ from src.game_build.tile import MineTile, SafeTile, Tile
 from random import choice, sample, shuffle
 
 
+class Mode:
+    def __init__(self, size, mine_percentage=50):
+        self.size = size
+        self.mine_count = self.get_mine_count_from_percentage_of_mines(mine_percentage)
+
+    def get_mine_count_from_percentage_of_mines(self, mine_percentage):
+        return round(self.size ** 2 * (mine_percentage / 100))
+
+    def get_mine_count(self):
+        return self.mine_count
+
+    def get_size(self):
+        return self.size
+
+
 class Board:
     def __init__(self, mode):
         self.grid = None
@@ -41,6 +56,14 @@ class Board:
         rows = columns = mode_info.get("size", 9)
         self.grid = Grid(rows, columns)
         print(f'game settings: {mode.upper()} {rows}x{columns}', "mines:", self.mine_count)
+
+    def apply(self, mode: Mode):
+        self.mine_count = mode.get_mine_count()
+        rows, columns = mode.get_size()
+        self.grid = Grid(rows, columns)
+
+    def customise_board(self, size, mine_percentage):
+        return Mode(size, mine_percentage)
 
     # TODO :  The board populates a grid with SafeTiles and MineTiles based on game configuration upon first move
     #  As a square board of minesweeper tiles

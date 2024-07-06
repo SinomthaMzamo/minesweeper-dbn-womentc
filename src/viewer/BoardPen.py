@@ -117,7 +117,7 @@ class BoardPen:
         flag = pygame.transform.scale(flag, (32, 32))
 
         flags_font = pygame.font.Font(fonts.GEOLOGICA, 20)
-        flags_placed_img = flags_font.render(str(game.get_number_of_flags_placed()) + "/" + str(game.get_mine_count()),
+        flags_placed_img = flags_font.render(str(game.get_number_of_flags_placed()) + "/" + str(game.get_mine_count_from_percentage_of_mines()),
                                              True, colours.BLACK)
         flag_progress = pygame.Surface((50, 50))
         flag_progress.fill(colours.LIGHT_GREY)

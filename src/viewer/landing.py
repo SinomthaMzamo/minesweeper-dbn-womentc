@@ -155,3 +155,54 @@ while True:
             pygame.quit()
     pygame.display.flip()
     pygame.time.Clock().tick(3)
+
+
+# todo: cleanup time via bdd
+
+# todo landing page story: help
+#   As a player
+#   I want a quick intro into the core gameplay and strategies
+#   So that I can understand the basics of the game before playing
+
+#  todo landing page: board selection
+#   As a player
+#   I want to be presented with the different difficulty levels available
+#   So that I can choose a difficulty that suits my interests
+
+#  todo landing page: aesthetics and UX
+#   As a player
+#   I want to see a visually appealing welcome
+#   So that I can get a sense and feel of the game
+
+#  todo landing page: easy start
+#   As a player
+#   I want to easily start playing the game
+#   So that I don't have to wait for the landing page to load the game
+
+# todo landing on the page:
+#     Given a user arrives at the Minesweeper game landing page.
+#     When the page loads,
+#     Then it should display a help button
+#     And this should display a clear and concise explanation of the game's objective
+#     (uncovering tiles while avoiding mines).
+#     And it should showcase the different difficulty levels (e.g., easy, medium, hard)
+#     with brief descriptions of each (e.g., board size, mine count).
+
+# todo difficulty level selection:
+#     Given a user clicks on a difficulty level button (e.g., "Easy").
+#     When the user selects a difficulty level.
+#     Then the controller should capture this selection
+#     And relay it to the model
+#     And the game should be launched with the corresponding board size and mine count pre-configured.
+
+# todo: viewing the game interface:
+#     Given the user is on the landing page.
+#     When the user scrolls down or clicks a "See the Game" button (optional).
+#     Then a section should be revealed showcasing a static image or animated GIF of the game interface.
+#     And this should highlight key elements like the board, tiles, flags, and timer (if applicable).
+
+# todo starting the game:
+#     Given the user is ready to play.
+#     When the user clicks a "Start Game" button.
+#     Then the game should launch with the chosen difficulty level (or default settings).
+

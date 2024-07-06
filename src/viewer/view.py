@@ -254,7 +254,7 @@ def main():
     mode = choice(game_modes)
 
     # Create Board instance
-    board1 = Board("hard")
+    board1 = Board("easy")
 
     # Create Game instance
     minesweeper = Game(board1)
