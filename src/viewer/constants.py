@@ -1,4 +1,4 @@
-import colours
+from src.viewer import colours
 # Define overall window dimensions
 WINDOW_WIDTH = 720
 WINDOW_HEIGHT = 600

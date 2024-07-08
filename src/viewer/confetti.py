@@ -48,7 +48,6 @@ class Confetti:
 
     def draw(self, screen_parm):
         pygame.draw.rect(screen_parm, self.colour, (self.x, self.y, 3, self.height))
-        print("there should be colour!!")
 
 
 def create_confetti(num_particles):

@@ -6,6 +6,33 @@ from src.game_build.tile import MineTile, SafeTile, Tile
 from random import choice, sample, shuffle
 
 
+class ModeFactory:
+    # todo: mode factory generates a default make
+    #   As a mode factory
+    #   I want to generate default make objects based on predefined values
+    #   So that there can be a level of automation in game setup
+    def __init__(self):
+        self.preset_modes = {
+            "sandy-baby": {"size": 50, "mine_count": 230},
+            "pops": {"size": 10, "mine_count": 60},
+            "test": {"size": 5, "mine_count": 2},
+            "easy": {"size": 9, "mine_count": 10},
+            "medium": {"size": 16, "mine_count": 40},
+            "hard": {"size": 24, "mine_count": 99}
+        }
+
+    def generate_preset_mode(self, mode_name: str):
+        size, mine_count = self.preset_modes.get(mode_name).get("size"), self.preset_modes.get(mode_name).get("mine_count")
+        mine_percentage = round(mine_count/(size**2)*100)
+        return Mode(size, mine_percentage)
+
+    def generate_custom_mode(self, size, mine_percentage):
+        return Mode(size, mine_percentage)
+
+
+
+
+
 class Mode:
     def __init__(self, size, mine_percentage=50):
         self.size = size
@@ -22,14 +49,14 @@ class Mode:
 
 
 class Board:
-    def __init__(self, mode):
+    def __init__(self, mode: Mode):
         self.grid = None
         self.mode = mode
         self.tile_size = None
         self.mine_count = None
         self.all_mines = []
         self.safe_tiles = []
-        self.apply_game_settings(mode)
+        self.apply(mode)
 
     # TODO : the board story:
     #  The board generates a grid and game configuration from user selected mode
@@ -45,13 +72,13 @@ class Board:
         difficulty_levels = {
             "sandy-baby": {"size": 50, "mine_count": 230},
             "pops": {"size": 10, "mine_count": 60},
-            "test": {"size": 5, "mine_count": 4},
+            "test": {"size": 5, "mine_count": 2},
             "easy": {"size": 9, "mine_count": 10},
             "medium": {"size": 16, "mine_count": 40},
             "hard": {"size": 24, "mine_count": 99}
         }
 
-        mode_info = difficulty_levels[self.mode.lower()]
+        mode_info = difficulty_levels[mode.lower()]
         self.mine_count = mode_info["mine_count"]
         rows = columns = mode_info.get("size", 9)
         self.grid = Grid(rows, columns)
@@ -59,7 +86,7 @@ class Board:
 
     def apply(self, mode: Mode):
         self.mine_count = mode.get_mine_count()
-        rows, columns = mode.get_size()
+        rows = columns = mode.get_size()
         self.grid = Grid(rows, columns)
 
     def customise_board(self, size, mine_percentage):

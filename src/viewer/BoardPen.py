@@ -71,7 +71,7 @@ class BoardPen:
         unrevealed_tile_img = self.generate_unrevealed_tile_image()
         flagged_tile_img, flag = self.generate_flagged_tile_image("../../assets/images/grey.png")
         revealed_tile_blank_img = self.generate_blank_revealed_tile()
-        revealed_mine_tile_img, bomb = self.generate_revealed_bomb_image("../../assets/spikes.png")
+        revealed_mine_tile_img, bomb = self.generate_revealed_bomb_image("../../assets/images/spikes.png")
 
         # Iterate through each tile in the board and draw it within the grid area
         for row in range(self.rows):

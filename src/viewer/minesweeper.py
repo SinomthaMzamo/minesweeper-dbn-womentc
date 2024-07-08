@@ -4,8 +4,8 @@ import pygame
 import colours
 import fonts
 import sys
-from game_build.minesweeper import Board
-from game_build.tile import SafeTile, MineTile
+from src.game_build.minesweeper import Board
+from src.game_build.tile import SafeTile, MineTile
 
 
 # TODO:

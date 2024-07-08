@@ -8,6 +8,7 @@ TURQUOISE = (175, 238, 238)
 LAVENDER = (230, 230, 250)
 PEACH = (255, 218, 185)
 MINT = (183, 250, 198)
+banner = (252, 246, 235)
 
 
 # Pastel Greens

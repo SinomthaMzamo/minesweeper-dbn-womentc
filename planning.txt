@@ -30,3 +30,20 @@ covered tiles:
     * if you uncover a completely safezone, automatically uncover neighbours until until
 uncovered tiles:
     * can show neighbour info
+
+# Help page content (replace with your actual help text)
+HELP_CONTENT = [
+    "How to Play:",
+    "  Starting the Game:",
+    "    Click any cell to start. The first cell will never be a bomb.",
+    "  Marking Bombs:",
+    "    Right-click on a covered cell to place a flag if you suspect a bomb.",
+    "  Uncovering Safe Zones:",
+    "    Left-click on a covered cell to uncover it. ",
+    "If it's safe and has no adjacent bombs, nearby cells will also be uncovered automatically.",
+    "  Game Over:",
+    "    If you uncover a bomb, all cells will be revealed, and the game will end.",
+    "",
+    "Use these instructions to navigate the game and understand the mechanics of each action.",
+    " Good luck and enjoy playing!"
+]

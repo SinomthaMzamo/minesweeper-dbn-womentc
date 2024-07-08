@@ -6,9 +6,9 @@ from random import choice
 
 import pygame
 
-from src.game_build.minesweeper import Board, Game
+from src.game_build.minesweeper import Board, Game, Mode, ModeFactory
 from src.game_build.tile import SafeTile
-from src.viewer import colours, fonts
+from src.viewer import colours, fonts, constants
 from src.viewer import confetti as visuals
 from src.viewer.button import Button
 
@@ -16,14 +16,20 @@ project_dir = os.path.split(os.path.split(os.path.split(os.path.abspath(__file__
 images_folder = os.path.join(project_dir, "assets/images")  # Path to viewer folder
 fonts_folder = os.path.join(project_dir, "assets/fonts")
 
+class View:
+    # brings up landing page
+    # allows user to navigate the pages
+    # board selection page leads to triggering the controller
+    pass
+
 # Initialize Pygame
 pygame.init()
 clock = pygame.time.Clock()
 FPS = 30
 
 # Define overall window dimensions
-WINDOW_WIDTH = 720
-WINDOW_HEIGHT = 600
+WINDOW_WIDTH = constants.WINDOW_WIDTH
+WINDOW_HEIGHT = constants.WINDOW_HEIGHT
 
 # Define grid dimensions and position within the window
 GRID_WIDTH = 540
@@ -243,21 +249,20 @@ def close():
     pygame.quit()
     sys.exit()
 
-
-def main():
-    """
-    Main function to initialize the game and handle game loop.
-    """
+def setUp(mode):
     sys.setrecursionlimit(10 ** 6)
-    # Available game modes
-    game_modes = ["easy", "medium", "hard"]
-    mode = choice(game_modes)
-
     # Create Board instance
-    board1 = Board("easy")
+    board1 = Board(mode)
 
     # Create Game instance
     minesweeper = Game(board1)
+    main(minesweeper)
+
+def main(minesweeper: Game):
+    """
+    Main function to initialize the game and handle game loop.
+    """
+
     start_time = None
     game_duration = 0
     running = True
