@@ -251,17 +251,17 @@ def draw_selection_page():
     easy_x, easy_y = 100, 33
     white_space = 40
     # create the buttons for the different board sizes
-    EASY = Button(easy_x, easy_y, MODE_BUTTON_WIDTH, MODE_BUTTON_HEIGHT, "", LOGO_FONT, colours.ASH_GREY, colours.ASH_GREY, colours.YELLOW,
+    EASY = Button(easy_x, easy_y, MODE_BUTTON_WIDTH, MODE_BUTTON_HEIGHT, "", LOGO_FONT, colours.ASH_GREY, colours.ASH_GREY, colours.ASH_GREY,
                   draw_selection_page)
     EASY.mode = ModeFactory().generate_preset_mode("easy")
     MEDIUM = Button(easy_x, easy_y + MODE_BUTTON_HEIGHT + white_space, MODE_BUTTON_WIDTH, MODE_BUTTON_HEIGHT, "",
                     LOGO_FONT, colours.ASH_GREY,
-                    colours.ASH_GREY, colours.YELLOW, draw_selection_page)
+                    colours.ASH_GREY, colours.ASH_GREY, draw_selection_page)
     MEDIUM.mode = ModeFactory().generate_preset_mode("medium")
     HARD = Button(easy_x, easy_y + 2 * white_space + (2 * MODE_BUTTON_HEIGHT), MODE_BUTTON_WIDTH, MODE_BUTTON_HEIGHT,
                   "", LOGO_FONT,
                   colours.ASH_GREY,
-                  colours.ASH_GREY, colours.YELLOW, draw_selection_page)
+                  colours.ASH_GREY, colours.ASH_GREY, draw_selection_page)
     HARD.mode = ModeFactory().generate_preset_mode("hard")
 
     buttons = {"easy": EASY, "medium": MEDIUM, "hard": HARD}
