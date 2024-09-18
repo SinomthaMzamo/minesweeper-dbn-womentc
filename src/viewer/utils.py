@@ -12,3 +12,4 @@ def generate_home_button_image(image_path: str):
     home_image = pygame.image.load(os.path.join(images_folder, image_path)).convert_alpha()
     home_image = pygame.transform.scale(home_image, (size, size))
     return home_image
+

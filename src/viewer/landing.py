@@ -115,6 +115,7 @@ class Animation:
         if self.current_frame >= number_of_frames:
             self.current_frame = 0
 
+
 def generate_home_button_image(image_path: str):
     size = 150 // 2
     home_image = pygame.image.load(os.path.join(images_folder, image_path)).convert_alpha()
@@ -150,6 +151,12 @@ def draw_home_button(screen, home_button):
     hovered_home_icon = generate_home_button_image("home(2).png")
     home_button.draw_image_button(screen, hovered_home_icon, idle_home_icon)
 
+def draw_preview_scrolls():
+    size = 150 // 2
+    image_path = "clipped-win.png"
+    win_image = pygame.image.load(os.path.join(images_folder, image_path)).convert_alpha()
+    win_image = pygame.transform.scale(win_image, (size, size))
+
 
 def draw_preview_window():
     screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), flags=pygame.SCALED | pygame.DOUBLEBUF, vsync=2)
@@ -164,6 +171,15 @@ def draw_preview_window():
                          pygame.font.Font(os.path.join(fonts_folder, fonts.ROBOTO), 30),
                          colours.THISTLE, colours.THISTLE, colours.CELADON_GREEN, draw_preview_window,
                          "Returns to main page")
+    scroll_left = Button(90, WINDOW_HEIGHT - 100, 100, 100, ".",
+                         pygame.font.Font(os.path.join(fonts_folder, fonts.ROBOTO), 30),
+                         colours.THISTLE, colours.THISTLE, colours.CELADON_GREEN, draw_preview_window,
+                         "see previous item")
+
+    scroll_right = Button(90, WINDOW_HEIGHT - 100, 100, 100, ".",
+                          pygame.font.Font(os.path.join(fonts_folder, fonts.ROBOTO), 30),
+                          colours.THISTLE, colours.THISTLE, colours.CELADON_GREEN, draw_preview_window,
+                          "see next item")
 
     # Game loop
     running = True
@@ -189,7 +205,7 @@ def draw_preview_window():
         pygame.display.flip()
 
         # Set frame rate (adjust as needed)
-        clock.tick(500)  # Aim for 30 FPS
+        clock.tick(10)  # Aim for 30 FPS
 
     # Quit Pygame
     pygame.quit()
@@ -199,7 +215,8 @@ def handle_help_click():
     """
     This function creates a new surface for the help window and displays the help content.
     """
-    help_window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), flags=pygame.SCALED | pygame.DOUBLEBUF, vsync=2)
+    help_window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), flags=pygame.SCALED | pygame.DOUBLEBUF,
+                                          vsync=2)
     pygame.display.set_caption("Minesweeper Help")
 
     home_button = Button(90, WINDOW_HEIGHT - 100, 100, 100, ".",
@@ -232,18 +249,20 @@ def create_rounded_rectangle(width, height, radius, colour):
     pygame.draw.rect(surface, colour, (0, 0, width, height), border_radius=radius)
     return surface
 
+
 def draw_mode_buttons(buttons, screen):
     for button in buttons.values():
         button.draw_mode_button(screen)
 
 
 def draw_selection_page():
-    home_button = Button(90, WINDOW_HEIGHT - 100, 100, 100, ".",
+    home_button = Button(420, WINDOW_HEIGHT - 100, 100, 100, ".",
                          pygame.font.Font(os.path.join(fonts_folder, fonts.ROBOTO), 30),
                          colours.THISTLE, colours.THISTLE, colours.CELADON_GREEN, draw_selection_page,
                          "Returns to main page")
 
-    selection_window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), flags=pygame.SCALED | pygame.DOUBLEBUF, vsync=2)
+    selection_window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), flags=pygame.SCALED | pygame.DOUBLEBUF,
+                                               vsync=2)
     selection_window.fill(colours.SNOW)
     pygame.display.set_caption("board selection window")
     clock = pygame.time.Clock()
@@ -251,7 +270,8 @@ def draw_selection_page():
     easy_x, easy_y = 100, 33
     white_space = 40
     # create the buttons for the different board sizes
-    EASY = Button(easy_x, easy_y, MODE_BUTTON_WIDTH, MODE_BUTTON_HEIGHT, "", LOGO_FONT, colours.ASH_GREY, colours.ASH_GREY, colours.ASH_GREY,
+    EASY = Button(easy_x, easy_y, MODE_BUTTON_WIDTH, MODE_BUTTON_HEIGHT, "", LOGO_FONT, colours.ASH_GREY,
+                  colours.ASH_GREY, colours.ASH_GREY,
                   draw_selection_page)
     EASY.mode = ModeFactory().generate_preset_mode("easy")
     MEDIUM = Button(easy_x, easy_y + MODE_BUTTON_HEIGHT + white_space, MODE_BUTTON_WIDTH, MODE_BUTTON_HEIGHT, "",
@@ -278,6 +298,8 @@ def draw_selection_page():
                 for button in buttons.values():
                     if button.is_clicked(pos):
                         return main(button.mode)
+                    if home_button.is_clicked(pos):
+                        return main()
 
         draw_home_button(selection_window, home_button)
         # update the screen
@@ -285,7 +307,6 @@ def draw_selection_page():
         clock.tick(500)
 
     pygame.quit()
-
 
 
 def main(game=None):
@@ -297,15 +318,14 @@ def main(game=None):
     window.fill(colours.banner)
     pygame.display.set_caption("Minesweeper Help")
     banner = pygame.image.load(os.path.join(images_folder, "detailed-banner.png"))
-    banner = pygame.transform.scale(banner, (WINDOW_WIDTH, 250))
-    # banner = pygame.transform.scale(banner, (WINDOW_WIDTH, WINDOW_HEIGHT//3))
-    window.blit(banner, (0, 0))
+    # banner = pygame.transform.scale(banner, (WINDOW_WIDTH, 270))
+    window.blit(banner, (60, 60))
     # create help button
-    leaderboard_button = Button(WINDOW_WIDTH // 4+30, WINDOW_HEIGHT // 2 + 30, 200, 40, "High Scores",
+    help_button = Button(WINDOW_WIDTH // 4, WINDOW_HEIGHT // 2 + 30, 200, 40, "Best Times",
                          pygame.font.Font(os.path.join(fonts_folder, fonts.ROBOTO), 24),
                          colours.ORANGE, colours.PINK, colours.CELADON_GREEN, handle_help_click)
 
-    choose_board_button = Button(WINDOW_WIDTH // 4+30, WINDOW_HEIGHT // 2 + 100, 200, 40,
+    choose_board_button = Button(WINDOW_WIDTH // 4, WINDOW_HEIGHT // 2 + 100, 200, 40,
                                  "choose board",
                                  pygame.font.Font(os.path.join(fonts_folder, fonts.GEOLOGICA), 24),
                                  colours.RED, colours.PINK, colours.CELADON_GREEN, handle_help_click)
@@ -334,7 +354,7 @@ def main(game=None):
     hovered_preview = landing.generate_preview_button_image("visibility.png")
     # load the
     while True:
-        leaderboard_button.draw(window)
+        help_button.draw(window)
         choose_board_button.draw(window)
         info_button.draw_image_button(window, hovered_info_icon, idle_info_icon)
         preview_button.draw_image_button(window, hovered_preview, idle_preview)
@@ -343,7 +363,7 @@ def main(game=None):
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                if leaderboard_button.is_clicked(pos):
+                if help_button.is_clicked(pos):
                     handle_help_click()
                 elif choose_board_button.is_clicked(pos):
                     draw_selection_page()
@@ -355,7 +375,6 @@ def main(game=None):
                 pygame.quit()
         pygame.display.flip()
         pygame.time.Clock().tick(100)
-
 
 # todo: cleanup time via bdd
 
@@ -405,4 +424,3 @@ def main(game=None):
 #     Given the user is ready to play.
 #     When the user clicks a "Start Game" button.
 #     Then the game should launch with the chosen difficulty level (or default settings).
-

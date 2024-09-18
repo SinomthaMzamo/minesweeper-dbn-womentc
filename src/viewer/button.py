@@ -30,6 +30,7 @@ class Button:
     def __init__(self, x, y, width, height, text, font, idle_color, hover_color, click_color, click_func, info_text=""):
         self.x = x
         self.y = y
+        print(self.x, self.y)
         self.width = width
         self.height = height
         self.text = text
@@ -83,7 +84,7 @@ class Button:
                 text_rect = self.info_text.get_rect(topleft=(self.x + self.width + 5,
                                                              self.y + self.height // 2 - self.info_text.get_height() // 2))  # Adjust position
                 screen.blit(self.info_text, text_rect)
-                print("some info fo u")
+                print("some info fo u", mouse_pos)
 
         else:
             self.surface.fill(window_bg)

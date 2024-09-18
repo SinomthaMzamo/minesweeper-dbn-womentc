@@ -61,7 +61,7 @@ def draw_mode_buttons(buttons, screen):
 
 
 def draw_selection_page():
-    home_button = Button(90, WINDOW_HEIGHT - 100, 100, 100, ".",
+    home_button = Button(190, WINDOW_HEIGHT - 100, 100, 100, ".",
                          pygame.font.Font(os.path.join(fonts_folder, fonts.ROBOTO), 30),
                          colours.THISTLE, colours.THISTLE, colours.CELADON_GREEN, launch,
                          "Returns to main page")
@@ -96,11 +96,6 @@ def draw_selection_page():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            # elif event.type == pygame.MOUSEBUTTONDOWN:
-            #     pass
-            #     pos = pygame.mouse.get_pos()
-            #     if EASY.is_clicked(pos):
-            #         return main()
 
         draw_home_button(selection_window, home_button)
         # update the screen
